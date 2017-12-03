@@ -485,3 +485,26 @@ input[type=number]::-webkit-outer-spin-button {
     -moz-appearance: none;
     margin: 0;
 }
+footer{
+    width: 100%;
+    height: 50px;
+    background-color: #eee;
+}
+footer h3{
+    padding-top: 14px;
+    text-align: center;
+}
+.ctnCenter{
+    margin: auto;
+}
+.imgHInh{
+    width: 100%;
+}
+.clearclear{
+    clear: both;
+}
+.btnCreatefilm{
+    position: absolute;
+    right: 0;
+    top: 0;
+}

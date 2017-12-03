@@ -23,10 +23,18 @@ app.set("view engine", "ejs");
 mongoose.connect(config.getDbConectionsString());
 setupController(app);
 cinemaController(app);
+
 app.get("/", function(req,res){
     res.render("index.ejs");
 });
 
+app.get("/createFilm",function(req,res){
+  res.render("addfilm.ejs");
+})
+
+app.get("/detailFilm",function(req,res){
+  res.render("filmdetail.ejs");
+})
 app.listen(port, function(){
   console.log("App listening on port: "+ port);
 })

@@ -33,7 +33,8 @@ module.exports = function(app){
                nam:
                     yearloop
                ,
-                noidung:"Câu chuyện kể về chàng trai mũ rơm luffy........"
+                noidung:"Câu chuyện kể về chàng trai mũ rơm luffy........",
+                image_url:"http://i.imacdn.com/ta/2016/09/18/ecc7aae02c12c5b2_17fa42679d95ed04_6285914742024443143215.jpg"
             },
             {
                 tenphim:"Dragon Ball",
@@ -54,7 +55,8 @@ module.exports = function(app){
                 nam:
                     yearloop
                 ,
-                noidung:"Dragon Ball Super Zeno-sama" 
+                noidung:"Dragon Ball Super Zeno-sama" ,
+                image_url:"http://i.imacdn.com/ta/2016/06/21/76358702a311d1ba_5ad85d27aa3a3c7e_8224914664781762143215.jpg"
             }
         ];
 

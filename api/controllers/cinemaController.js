@@ -32,14 +32,15 @@ module.exports = function (app) {
     /**
      * Create film
      */
-    app.post("/api/cinema", function(req,res){
-
+    app.post("/api/cinema", function(req,res){ 
+         
         var cinema = {
             tenphim: req.body.tenphim,
             theloai: req.body.theloai,
             thang: req.body.thang,
             nam: req.body.nam,
-            noidung: req.body.noidung
+            noidung: req.body.noidung,
+            image_url:req.body.image_url
         };
 
 
@@ -49,7 +50,9 @@ module.exports = function (app) {
             } else {
                 getCinemas(res);
             }
+            
         });
+        
     });
 
     /**
@@ -66,7 +69,8 @@ module.exports = function (app) {
                 theloai:req.body.theloai,
                 thang: req.body.thang,
                 nam: req.body.nam,
-                noidung:req.body.noidung
+                noidung:req.body.noidung,
+                image_url:req.body.image_url
             }, function(err, cinema){
                 if(err){
                     return res.status(500),json(err);

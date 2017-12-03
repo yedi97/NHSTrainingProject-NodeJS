@@ -7,7 +7,8 @@ var cinemaSchema = new Schema({
     theloai: String,
     thang: String,
     nam: String,
-    noidung: String
+    noidung: String,
+    image_url:String
 });
 
 var Cinemas = mongoose.model('Cinemas',cinemaSchema);

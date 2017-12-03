@@ -27,36 +27,26 @@
     <link rel="stylesheet" href="assets/stylesheets/loader.css">
 </head>
 
-<link rel="stylesheet" href="assets/stylesheets/film/create.css">
-<script src="assets/javascripts/film/create.js"></script>
-
 <body ng-controller="cinemaController">
-        <div class="panel panel-default" ng-init="getBooks()">
-            <div class="panel-heading">
-                <h3 class="panel-title">CINEMA APPLICATION</h3>
-                <a class="btn btn-primary btnCreatefilm" href="/createFilm">Create Film</a>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div ng-repeat="cinema in cinemas">
-                        <div class="col-md-6">
-                            <div class="col-md-6">
-                                <h4>{{cinema.tenphim}}</h4>
-                                <p>{{cinema.theloai}}</p>
-                                <a class="btn btn-primary" href="">View Details</a>
-                            </div>
-                            <div class="col-md-6">
-                                <img class="thumbnail imgHInh" src="{{cinema.image_url}}">
-                            </div>
-                            <div class="clearclear"></div>
-                        </div>
-                    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{cinema.appName}}</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="{{cinema.image_url}}">
                 </div>
-            </div>     
-        </div>      
+                <div class="col-md-8">
+                    </p>{{cinema.noidung}}</p>
+                    <ul class="list-group">
+                        <li class="list-group-item">Năm sản xuất: {{cinema.nam}}</li>
+                        <li class="list-group-item">tháng sản xuất: {{cinema.thang}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-<footer>
-    <h3>Copyright Cinema Box</h3>
-</footer>
 
 </html>
