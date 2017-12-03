@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+<html lang="en" ng-app="CinemaApp">
+
+<head>
+    <title>
+        Hello Cinema
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Cinema Application">
+    <meta name="author" content="Stupid-Dog">
+    <meta name="keyword" content="cinema application">
+
+    <link rel="icon" href="assets/images/favicon.png">
+
+    <!-- load Google Fonts  -->
+    <link href="//fonts.googleapis.com/css?family=Paytone+One|Quicksand&amp;subset=latin-ext,vietnamese" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Oswald:700&amp;subset=latin-ext,vietnamese" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+
+
+    <!-- load BootStrap  -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- load AngularJS  -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="//cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+
+    <!-- load Animate.css  -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+    <!-- load Firebase  -->
+    <!-- <script src="//www.gstatic.com/firebasejs/4.2.0/firebase-app.js "></script>
+    <script src="//www.gstatic.com/firebasejs/4.2.0/firebase-auth.js "></script>
+    <script src="//www.gstatic.com/firebasejs/4.2.0/firebase-database.js "></script>
+    <script src="//www.gstatic.com/firebasejs/4.2.0/firebase-messaging.js "></script>
+    <script src="//www.gstatic.com/firebasejs/4.2.0/firebase.js "></script>
+    <script src="/javascripts/system/configFirebase.js"></script> -->
+
+    <!-- load Default  -->
+    <link rel="stylesheet" href="assets/stylesheets/style.css">
+    <script src="assets/javascripts/setting.js"></script>
+    <script src="assets/javascripts/main.js"></script>
+    <link rel="stylesheet" href="assets/stylesheets/loader.css">
+
+</head>
+
+<body id="page-top" ng-controller="mainController">
+
+    <!-- CONFIG LOGIN FACEBOOK  -->
+    <!-- insert it directly after the opening <body> tag   -->
+    <script src="assets/javascripts/system/configFacebook.js"></script>
+
+    <!-- ICON SCROLL TO TOP -->
+    <a href="" id="scroll-to-top">
+        <img src="assets/images/scroll-top.png" alt="">
+    </a>
+
+
+
+
+    <!-- HEADER PAGE  -->
+
+    <div class="my-header-page">
+        <div class="my-top-header-text">
+            <h1> Cinema Application </h1>
+        </div>
+        <!-- <div class="my-bot-header-text text-right">
+            <a href="https://github.com/huynhsamha" target="_blank">
+                <h4> Contact me: https://github.com/huynhsamha</h4>
+            </a>
+        </div> -->
+    </div>
+
+
+
+    <!-- LOADER  -->
+
+    <!-- <div class="loader"></div> -->
+
+
+
+    <!-- NAVIGATION -->
+    <!-- <nav class="navbar navbar-default navbar-fixed-top navbar-custom"> -->
+    <nav class="navbar navbar-default navbar-custom">
+        <div class="container my-containter-full">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                </a>
+                <!-- <a class="navbar-brand" href="/user/profile" ng-cloak ng-hide="!userLogined">
+                    {{currentUsername}}
+                </a> -->
+                <!-- <a class="navbar-brand" href="/">Cinema</a> -->
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                <ul class="nav navbar-nav nav-left">
+                    <li class="li-icon" ng-show="checkPageIndex()">
+                        <a href="" onclick="toggleInputSearch()">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="li-input-search" ng-show="checkPageIndex()" ng-cloak>
+                        <input type="text" class="form-control input-search" id="input-search" placeholder="Nhập từ khóa tìm kiếm ..." ng-model="search">
+                    </li>
+                    <li class="li-icon">
+                        <a href="/" ng-show="!checkPageIndex()" ng-cloak>
+                            <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/user/profile" ng-cloak ng-hide="!userLogined">
+                            <img ng-src="{{currentUserAvartar}}" alt="avatar" ng-cloak> {{currentUsername}}
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/film/createFilm" ng-cloak>
+                            <i class="fa fa-upload fa-lg" aria-hidden="true"></i> Tạo phim mới </a>
+                    </li>
+
+                    <li ng-hide="userLogined" ng-cloak>
+                        <a href="#" data-toggle="modal" data-target="#modalLogin">
+                            <i class="fa fa-sign-in fa-lg" aria-hidden="true"></i> Đăng nhập</a>
+                    </li>
+
+                    <li ng-hide="userLogined" ng-cloak>
+                        <a href="#" data-toggle="modal" data-target="#modalSignUp">
+                            <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i> Đăng ký</a>
+                    </li>
+
+                    <!-- <li ng-hide="!userLogined" ng-cloak>
+                        <a href="/user/profile">
+                            <i class="fa fa-user fa-lg" aria-hidden="true"></i> {{currentUsername}}</a>
+                    </li> -->
+
+                    <!-- <li ng-hide="!userLogined" ng-cloak>
+                        <a href="#" data-toggle="modal" data-target="#modalChangePassword">
+                            <i class="fa fa-cog fa-lg" aria-hidden="true"></i> Đổi mật khẩu </a>
+                    </li> -->
+                    <!-- <li ng-hide="!userLogined" ng-cloak>
+                        <a href="#" data-toggle="modal" data-target="#modalLogout">
+                            <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i> Đăng xuất</a>
+                    </li> -->
+
+
+                    <!-- Dropdown menu  -->
+
+                    <li class="dropdown my-drop-down" ng-hide="!userLogined" ng-cloak>
+                        <a class="dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-cogs fa-lg" aria-hidden="true"></i> Cài đặt
+                        </a>
+                        <div id="my-dropdown-menu" class="dropdown-menu my-dropdown-menu animated bounceIn" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/user/profile">
+                                <div class="my-menu-item">
+                                    <i class="fa fa-user-circle fa-lg" aria-hidden="true"></i> &nbsp; Thiết lập hồ sơ
+                                </div>
+                            </a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalChangePassword">
+                                <div class="my-menu-item">
+                                    <i class="fa fa-unlock-alt fa-lg" aria-hidden="true"></i> &nbsp; Thay đổi mật khẩu
+                                </div>
+                            </a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalLogout">
+                                <div class="my-menu-item">
+                                    <i class="fa fa-sign-out fa-lg" aria-hidden="true"></i> &nbsp; Đăng xuất
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+    </nav>
+
+
+
+
+
+    <!-- LOGIN  -->
+
+    <script src="assets/javascripts/system/login.js"></script>
+    <script src="assets/javascripts/system/loginGoogle.js"></script>
+    <script src="assets/javascripts/system/loginFacebook.js"></script>
+
+
+    <div class="modal fade animated rotateInUpRight" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="modalLoginLabel" aria-hidden="true" ng-controller="loginController">
+        <div class="modal-dialog my-modal-dialog" role="document">
+            <div class="modal-content my-modal-content">
+                <div class="modal-header my-modal-header">
+                    <div class="text-right" style="margin-right: 20px">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-close fa-lg" aria-hidden="true"></i>
+        			    </button>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <h3 class="modal-title my-font-title" id="modalLoginLabel">Đăng nhập</h3>
+                    </div>
+                </div>
+                <div class="modal-body my-modal-body">
+                    <form role="form">
+                        <div class="input-group my-div">
+                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                            <input type="text" class="form-control" placeholder="Địa chỉ email" id="emailLogin" name="emailLogin" ng-model="emailLogin">
+                        </div>
+                        <div class="input-group my-div">
+                            <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                            <input type="password" class="form-control" id="passwordLogin" name="passwordLogin" placeholder="Mật khẩu" ng-model="passwordLogin">
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" value="true" id="rememberPassword" name="rememberPassword" ng-model="rememberPassword"> Lưu mật khẩu
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary" id="btnLogin" name="btnLogin" ng-click="clickLogin()"> 
+					<i class="fa fa-sign-in fa-lg" aria-hidden="true"></i> Đăng nhập </button>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6" id="div-login-google">
+                                <a href="#" ng-controller="loginGoogleController" ng-click="loginGoogle()">
+                                    <img src="assets/images/google.png" alt="Đăng nhập với Google+" width="100%" height="45px">
+                                </a>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6" id="div-login-facebook">
+                                <a href="#" ng-controller="loginFacebookController" ng-click="loginFacebook()">
+                                    <img src="assets/images/facebook.png" alt="Đăng nhập bằng Facebook" width="100%" height="45px">
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row col-xs-12 col-sm-12 col-md-12" style="margin-top:10px">
+                        <a href="#" class="my-text-bold" data-toggle="modal" data-target="#modalForgetPassword" data-dismiss="modal"> Quên mật khẩu <i class="fa fa-question-circle fa-fw" aria-hidden="true"></i> </a>
+                    </div>
+                    <div class="row col-xs-12 col-sm-12 col-md-12 my-text-bold" style="margin-top:5px;margin-bottom:15px">
+                        Bạn chưa là thành viên.
+                        <a href="#" data-toggle="modal" data-target="#modalSignUp" data-dismiss="modal"> 
+                                      Đăng ký </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- FORGET PASSWORD  -->
+
+    <script src="assets/javascripts/system/forget.js"></script>
+    <div class="modal fade animated bounceInLeft" id="modalForgetPassword" tabindex="-1" role="dialog" aria-labelledby="modalForgetPasswordLabel" aria-hidden="true">
+        <div class="modal-dialog my-modal-dialog" role="document">
+            <div class="modal-content my-modal-content">
+                <div class="modal-header my-modal-header">
+                    <div class="text-right" style="margin-right: 20px">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-close fa-lg" aria-hidden="true"></i>
+        			    </button>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <h3 class="modal-title my-font-title" id="modalForgetPasswordLabel"> Khôi phục mật khẩu</h3>
+                    </div>
+                </div>
+                <div class="modal-body my-modal-body" ng-controller="forgetController">
+                    <div class="my-div my-text-bold">
+                        Nhập địa chỉ email đã đăng ký
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="emailRecover" name="emailRecover" placeholder="Địa chỉ email" ng-model="emailRecover">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Thoát</button>
+                            <button type="submit" class="btn btn-primary" ng-click="clickRecover()"> Gửi yêu cầu </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- SIGN UP  -->
+
+    <script src="assets/javascripts/system/signup.js"></script>
+    <div class="modal fade animated lightSpeedIn" id="modalSignUp" tabindex="-1" role="dialog" aria-labelledby="modalSignUpLabel" aria-hidden="true">
+        <div class="modal-dialog my-modal-dialog" role="document">
+            <div class="modal-content my-modal-content">
+                <div class="modal-header my-modal-header">
+                    <div class="text-right" style="margin-right: 20px">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-close fa-lg" aria-hidden="true"></i>
+        			    </button>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <h3 class="modal-title my-font-title" id="modalSignUpLabel"> Đăng ký </h3>
+                    </div>
+                </div>
+                <div class="modal-body my-modal-body">
+                    <div ng-controller="signupController">
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="username"> Tên người dùng </label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="" ng-model="username">
+                            </div>
+                            <div class="form-group">
+                                <label for="emailSignUp"> Địa chỉ email</label>
+                                <input type="text" class="form-control" id="emailSignUp" name="emailSignUp" placeholder="your-email@example.com" ng-model="emailSignUp">
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordSignUp"> Mật khẩu</label>
+                                <input type="password" class="form-control" id="passwordSignUp" name="passwordSignUp" placeholder="" ng-model="passwordSignUp">
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordConfirm"> Xác nhận mật khẩu</label>
+                                <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="" ng-model="passwordConfirm">
+                            </div>
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-primary" id="btnSignup" name="btnSignup" ng-click="clickSignUp()"> 
+				<i class="fa fa-user-plus fa-lg" aria-hidden="true"></i> Tạo tài khoản </button>
+                            </div>
+                            <div class="form-group my-text-bold">
+                                Đã có tài khoản.
+                                <a href="#" data-toggle="modal" data-target="#modalLogin" data-dismiss="modal">  Đăng nhập. </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer">
+                     <a href="#" class="my-text-bold" data-toggle="modal" data-target="#modalLogin" data-dismiss="modal"> Đã có tài khoản</a> 
+                     <button type="button" class="btn btn-success" data-dismiss="modal">Thoát</button> 
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- CHANGE PASSWORD  -->
+
+    <script src="assets/javascripts/user/changePassword.js"></script>
+    <div class="modal fade animated rotateIn" id="modalChangePassword" tabindex="-1" role="dialog" aria-labelledby="modalChangePasswordLabel" aria-hidden="true">
+        <div class="modal-dialog my-modal-dialog" role="document">
+            <div class="modal-content my-modal-content">
+                <div class="modal-header my-modal-header">
+                    <div class="text-right" style="margin-right: 20px">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-close fa-lg" aria-hidden="true"></i>
+        			    </button>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <h3 class="modal-title my-font-title" id="modalChangePasswordLabel"> Đổi mật khẩu </h3>
+                    </div>
+                </div>
+                <div class="modal-body my-modal-body">
+                    <div ng-controller="changePasswordController">
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="passwordCurrent"> Mật khẩu hiện tại</label>
+                                <input type="password" class="form-control" id="passwordCurrent" name="passwordCurrent" ng-model="passwordCurrent">
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordNew"> Mật khẩu mới </label>
+                                <input type="password" class="form-control" id="passwordNew" name="passwordNew" ng-model="passwordNew">
+                            </div>
+                            <div class="form-group">
+                                <label for="passwordNewConfirm"> Xác nhận mật khẩu </label>
+                                <input type="password" class="form-control" id="passwordNewConfirm" name="passwordNewConfirm" ng-model="passwordNewConfirm">
+                            </div>
+                            <div class="form-group text-center">
+                                <button type="button" class="btn btn-success" data-dismiss="modal">Thoát</button>
+                                <button type="submit" class="btn btn-primary" id="btnChangePassword" name="btnChangePassword" ng-click="clickChangePassword()"> 
+				<i class="fa fa-edit fa-lg" aria-hidden="true"></i> Thay đổi mật khẩu </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- LOGOUT  -->
+
+    <div class="modal fade animated shake" id="modalLogout" tabindex="-1" role="dialog" aria-labelledby="modalLogoutLabel" aria-hidden="true">
+        <div class="modal-dialog my-modal-dialog" role="document">
+            <div class="modal-content my-modal-content">
+                <div class="modal-header my-modal-header">
+                    <div class="text-right" style="margin-right: 20px">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-close fa-lg" aria-hidden="true"></i>
+        			    </button>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <h3 class="modal-title" id="modalLogoutLabel">Bạn thực sự muốn đăng xuất?</h3>
+                    </div>
+                </div>
+                <div class="row" style="margin:20px">
+                    <div class="col-xs-6 col-md-6 col-lg-6 text-left">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"> Không</button>
+                    </div>
+                    <div class="col-xs-6 col-md-6 col-lg-6 text-right">
+                        <button type="submit" class="btn btn-danger" ng-click="clickLogout()"> Có </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Insert BODY in other page  -->
+
+    
+
+    <link rel="stylesheet" href="assets/stylesheets/film/create.css">
+    <script src="assets/javascripts/film/create.js"></script>
+
+
+
+    <div ng-controller="createController" ng-show="completeLoading">
+
+        <div class="container my-container-center my-title-header">
+            <h1> Tạo phim mới </h1>
+        </div>
+
+        <div class="container my-create-film">
+            <form role="form">
+                <div class="container col-sm-12 col-md-5 my-upload-image text-center animated fadeIn">
+                    <a href="" ng-click="clickUploadImage()">
+                        <img id="imageFilm" name="imageFilm" src="assets/images/image.png">
+                    </a>
+                    <input type="file" style="display:none" id="fileInput" name="fileInput" accept="image/*" onchange="readURL(this)">
+
+                    <button type="button" class="btn btn-primary my-btn text-center" ng-click="clickUploadImage()">
+                    <i class="fa fa-file-image-o fa-lg" aria-hidden="true"></i>
+                        Chọn hình minh họa
+                </button>
+                </div>
+
+                <div class="container col-sm-12 col-md-7 my-form-film animated flipInX">
+                    <div class="form-group">
+                        <h4>Tên bộ phim:</h4>
+                        <input class="form-control my-input-film" type="text" id="filmName" ng-model="filmName">
+                    </div>
+
+                    <div class="form-group">
+                        <h4>Thể loại phim:</h4>
+                        <select ng-options="genre for genre in listGenreFilms" ng-model="filmGenre" class="my-input-film col-md-12 col-sm-12 col-lg-12 col-xs-12 my-select-film" id="filmGenre">
+                    </select>
+                    </div>
+
+                    <!-- <div class="form-group">
+                    <h4> Thời gian phát hành: </h4>
+                    <input class="form-control my-input-film" type="month" id="yearFilm" min="1900-01" value="2017-08" max="2030-12">
+                </div> -->
+
+                    <div class="form-group">
+                        <h4> Thời gian phát hành: </h4>
+                        <select ng-options="month for month in listMonth" ng-model="filmMonth" class="my-input-film my-select-film col-lg-5 col-md-5 col-sm-5 col-xs-5" id="filmMonth"></select>
+
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                        </div>
+
+                        <select ng-options="year for year in listYear" ng-model="filmYear" class="my-input-film col-md-5 col-sm-5 col-lg-5 col-xs-5 my-select-film" id="filmYear"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <h4> Nội dung mô tả:</h4>
+                        <textarea class="form-control col-sm-12 col-md-12 my-input-film" id="filmContent" rows="5" placeholder="Điền thông tin thêm về bộ phim, như diễn viên chính, nội dung bộ phim,..." ng-model="filmContent"></textarea>
+                    </div>
+                </div>
+
+                <div class="container my-container-center my-bot-form">
+                    <button type="submit" class="btn btn-primary my-btn text-center animated slideInUp" ng-click="clickUploadFilm()" ng-disabled="!userLogined" style="margin-right:15px">
+                <i class="fa fa-upload fa-lg" aria-hidden="true"></i>
+                    Đăng phim
+                </button>
+                    <button type="submit" class="btn btn-primary my-btn text-center animated slideInUp" ng-hide="userLogined" data-toggle="modal" data-target="#modalLogin">
+                <i class="fa fa-sign-in fa-lg" aria-hidden="true"></i>
+                     Bạn cần đăng nhập
+                </button>
+                </div>
+            </form>
+
+
+            <!-- THÔNG BÁO NÊN ĐĂNG NHẬP TRƯỚC KHI TẠO PHIM  -->
+            <div class="modal fade animated rubberBand" id="modalWarningCreateFilm" tabindex="-1" role="dialog">
+                <div class="modal-dialog my-modal-dialog" role="document">
+                    <div class="modal-content my-modal-content">
+                        <div class="modal-header my-modal-header">
+                            <div class="text-right" style="margin-right: 20px">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-close fa-lg" aria-hidden="true"></i>
+        			    </button>
+                            </div>
+                            <br>
+                            <div class="text-center">
+                                <h3 class="modal-title">Bạn nên đăng nhập để tạo phim.</h3>
+                            </div>
+                        </div>
+                        <div class="row" style="margin:20px">
+                            <div class="col-xs-6 col-md-6 col-lg-6 text-left">
+                                <button type="submit" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                            </div>
+                            <div class="col-xs-6 col-md-6 col-lg-6 text-right">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#modalLogin">Đăng nhập</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+        <!-- FOOTER  -->
+
+        <footer class="text-center my-footer" style="display:none">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; Cinema Website 2017
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+</body>
+
+</html>
